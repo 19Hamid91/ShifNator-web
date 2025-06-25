@@ -13,11 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        if (!User::where('email', 'admin@mail.com')->exists()) {
+            User::factory()->create([
+                'name' => 'admin',
+                'email' => 'admin@mail.com',
+            ]);
+        }
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
-        ]);
+        $this->call(EmployeeSeeder::class);
     }
 }

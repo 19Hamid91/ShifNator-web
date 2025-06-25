@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->json('unavailable_shift')->nullable(); // Format: {"monday":{"morning":true,"night":false},...}
+            $table->unsignedTinyInteger('max_shift_per_employee')->default(5); // Max shifts per employee for this schedule
+            $table->json('selected_employees'); // array of employee IDs used in this schedule
+            $table->json('result'); // Format: {"monday":{"morning":"Alice","night":"Bob"}, ...}
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('schedules');
     }
 };

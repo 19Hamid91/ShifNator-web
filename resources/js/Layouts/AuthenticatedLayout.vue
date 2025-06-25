@@ -45,6 +45,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Employee
                                 </NavLink>
+                                <NavLink
+                                    :href="route('schedule.index')"
+                                    :active="route().current('schedule.index')"
+                                    class="hover:bg-teal-300"
+                                >
+                                    Schedule
+                                </NavLink>
                             </div>
                         </div>
 
@@ -157,6 +164,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('employee.index')"
                         >
                             Employee
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('schedule.index')"
+                            :active="route().current('schedule.index')"
+                        >
+                            Schedule
                         </ResponsiveNavLink>
                     </div>
 

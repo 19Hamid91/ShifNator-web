@@ -19,14 +19,18 @@ import { Head } from "@inertiajs/vue3";
 
                         <v-card-text class="py-0">
                             <v-row align="center" no-gutters>
-                                <v-col class="text-h2" cols="6"> 25 </v-col>
+                                <v-col cols="6">
+                                    <div class="text-h5 text-md-h3">25</div>
+                                </v-col>
 
                                 <v-col class="text-right" cols="6">
                                     <v-icon
                                         color="primary"
+                                        :size="
+                                            $vuetify.display.smAndDown ? 36 : 88
+                                        "
                                         icon="mdi-account-group"
-                                        size="88"
-                                    ></v-icon>
+                                    />
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -36,14 +40,18 @@ import { Head } from "@inertiajs/vue3";
 
                         <v-card-text class="py-0">
                             <v-row align="center" no-gutters>
-                                <v-col class="text-h2" cols="6">5</v-col>
+                                <v-col cols="6">
+                                    <div class="text-h5 text-md-h3">5</div>
+                                </v-col>
 
                                 <v-col class="text-right" cols="6">
                                     <v-icon
                                         color="warning"
+                                        :size="
+                                            $vuetify.display.smAndDown ? 36 : 88
+                                        "
                                         icon="mdi-calendar"
-                                        size="88"
-                                    ></v-icon>
+                                    />
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -53,14 +61,18 @@ import { Head } from "@inertiajs/vue3";
 
                         <v-card-text class="py-0">
                             <v-row align="center" no-gutters>
-                                <v-col class="text-h2" cols="6">14</v-col>
+                                <v-col cols="6">
+                                    <div class="text-h5 text-md-h3">25</div>
+                                </v-col>
 
                                 <v-col class="text-right" cols="6">
                                     <v-icon
-                                        color="success"
+                                        color="grey"
+                                        :size="
+                                            $vuetify.display.smAndDown ? 36 : 88
+                                        "
                                         icon="mdi-swap-horizontal-bold"
-                                        size="88"
-                                    ></v-icon>
+                                    />
                                 </v-col>
                             </v-row>
                         </v-card-text>
