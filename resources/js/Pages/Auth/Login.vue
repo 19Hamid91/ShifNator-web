@@ -1,11 +1,12 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import Checkbox from "@/Components/Checkbox.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineProps({
     canResetPassword: {
@@ -16,15 +17,22 @@ defineProps({
     },
 });
 
+const passwordType = ref("password");
+
+const togglePassword = () => {
+    passwordType.value =
+        passwordType.value === "password" ? "text" : "password";
+};
+
 const form = useForm({
-    email: '',
-    password: '',
+    email: "admin@mail.com",
+    password: "password",
     remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
     });
 };
 </script>
@@ -38,62 +46,64 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
+            <div class="mt-4">
+                <v-text-field
+                    label="Email"
+                    variant="solo-filled"
                     v-model="form.email"
+                    type="email"
                     required
                     autofocus
                     autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
-                </label>
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    density="compact"
+                    :error-messages="form.errors.email"
+                    hide-details
                 >
-                    Forgot your password?
-                </Link>
+                    <template #prepend-inner>
+                        <v-icon class="me-3" color="teal">mdi-account</v-icon>
+                    </template>
+                </v-text-field>
+            </div>
 
-                <PrimaryButton
+            <div class="mt-6">
+                <v-text-field
+                    label="Password"
+                    variant="solo-filled"
+                    v-model="form.password"
+                    :type="passwordType"
+                    required
+                    density="compact"
+                    :error-messages="form.errors.password"
+                    hide-details
+                >
+                    <template #prepend-inner>
+                        <v-icon class="me-3" color="teal">mdi-lock</v-icon>
+                    </template>
+                    <template #append-inner>
+                        <v-icon
+                            class="ms-3"
+                            color="teal"
+                            @click="togglePassword"
+                            >{{
+                                passwordType == "password"
+                                    ? "mdi-eye"
+                                    : "mdi-eye-off"
+                            }}</v-icon
+                        >
+                    </template>
+                </v-text-field>
+            </div>
+
+            <div class="mt-8 mb-2 flex items-center justify-end">
+                <v-btn
+                    type="submit"
+                    color="teal"
+                    block
                     class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
+                    :loading="form.processing"
                 >
                     Log in
-                </PrimaryButton>
+                </v-btn>
             </div>
         </form>
     </GuestLayout>
