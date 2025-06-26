@@ -21,9 +21,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
         Route::get('/table', [EmployeeController::class, 'table'])->name('employee.table');
         Route::get('/create', [EmployeeController::class, 'create'])->name('employee.create');
-        Route::get('/store', [EmployeeController::class, 'store'])->name('employee.store');
-        Route::get('/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
-        Route::get('/update', [EmployeeController::class, 'update'])->name('employee.edit');
+        Route::post('/store', [EmployeeController::class, 'store'])->name('employee.store');
+        Route::get('/edit/{employee}', [EmployeeController::class, 'edit'])->name('employee.edit');
+        Route::patch('/update/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
     });
 
     Route::prefix('schedule')->group(function () {

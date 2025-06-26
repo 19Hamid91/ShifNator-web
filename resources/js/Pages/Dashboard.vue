@@ -10,7 +10,7 @@ import { Head } from "@inertiajs/vue3";
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- stat -->
-                <div class="flex w-full gap-4 mb-4">
+                <div class="flex flex-col md:flex-row w-full gap-4 mb-4">
                     <v-card class="mx-auto w-full">
                         <v-card-item
                             title="Employee"
@@ -27,7 +27,7 @@ import { Head } from "@inertiajs/vue3";
                                     <v-icon
                                         color="primary"
                                         :size="
-                                            $vuetify.display.smAndDown ? 36 : 88
+                                            $vuetify.display.smAndDown ? 48 : 88
                                         "
                                         icon="mdi-account-group"
                                     />
@@ -48,7 +48,7 @@ import { Head } from "@inertiajs/vue3";
                                     <v-icon
                                         color="warning"
                                         :size="
-                                            $vuetify.display.smAndDown ? 36 : 88
+                                            $vuetify.display.smAndDown ? 48 : 88
                                         "
                                         icon="mdi-calendar"
                                     />
@@ -69,7 +69,7 @@ import { Head } from "@inertiajs/vue3";
                                     <v-icon
                                         color="grey"
                                         :size="
-                                            $vuetify.display.smAndDown ? 36 : 88
+                                            $vuetify.display.smAndDown ? 48 : 88
                                         "
                                         icon="mdi-swap-horizontal-bold"
                                     />

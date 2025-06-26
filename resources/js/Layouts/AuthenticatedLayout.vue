@@ -28,27 +28,25 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                            >
+                            <div class="hidden sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
-                                    class="hover:bg-teal-300"
+                                    class="w-full px-4 hover:bg-teal-300"
                                 >
                                     Dashboard
                                 </NavLink>
                                 <NavLink
                                     :href="route('employee.index')"
-                                    :active="route().current('employee.index')"
-                                    class="hover:bg-teal-300"
+                                    :active="route().current('employee.*')"
+                                    class="w-full px-4 hover:bg-teal-300"
                                 >
                                     Employee
                                 </NavLink>
                                 <NavLink
                                     :href="route('schedule.index')"
-                                    :active="route().current('schedule.index')"
-                                    class="hover:bg-teal-300"
+                                    :active="route().current('schedule.*')"
+                                    class="w-full px-4 hover:bg-teal-300"
                                 >
                                     Schedule
                                 </NavLink>
@@ -161,13 +159,13 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('employee.index')"
-                            :active="route().current('employee.index')"
+                            :active="route().current('employee.*')"
                         >
                             Employee
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('schedule.index')"
-                            :active="route().current('schedule.index')"
+                            :active="route().current('schedule.*')"
                         >
                             Schedule
                         </ResponsiveNavLink>

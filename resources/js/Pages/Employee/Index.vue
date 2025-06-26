@@ -38,6 +38,11 @@ const headers = ref([
     { title: "No", key: "no", align: "start", sortable: false },
     { title: "Nama", key: "name", align: "start" },
     { title: "Status", key: "status", align: "center" },
+    {
+        title: "Unavailable Shift",
+        key: "unavailable_shift_display",
+        align: "start",
+    },
     { title: "Aksi", key: "aksi", align: "center", sortable: false },
 ]);
 const dataItems = ref([]);
@@ -91,7 +96,7 @@ function loadItems(options) {
                                         hide-details
                                         style="
                                             max-width: 200px;
-                                            min-width: 125px;
+                                            min-width: 150px;
                                         "
                                         variant="outlined"
                                     ></v-text-field>
@@ -130,6 +135,23 @@ function loadItems(options) {
                                 >
                             </div>
                         </template>
+
+                        <!-- Kolom Unavailable Shift -->
+                        <template #item.unavailable_shift_display="{ item }">
+                            <div class="flex flex-wrap justify-start">
+                                <ul class="list-disc pl-4">
+                                    <li
+                                        v-for="(
+                                            shift, index
+                                        ) in item.unavailable_shift_display"
+                                        :key="index"
+                                    >
+                                        {{ shift }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+
                         <!-- Kolom Aksi -->
                         <template #item.aksi="{ item }">
                             <div class="flex justify-center gap-2">
