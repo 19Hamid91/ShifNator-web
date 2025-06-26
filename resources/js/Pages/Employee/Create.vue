@@ -107,7 +107,7 @@ watch(
                                 >
                             </v-btn>
                         </Link>
-                        <h6 class="text-h6 ms-4">Employee List</h6>
+                        <h6 class="text-h6 ms-4">Employee Detail</h6>
                     </v-card-title>
                     <form @submit.prevent="submit">
                         <v-card-text>

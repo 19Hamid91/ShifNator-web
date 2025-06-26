@@ -13,7 +13,7 @@ const fecthData = async ({ page, itemsPerPage, sortBy, search }) => {
     });
 
     try {
-        const res = await fetch(`/employee/table?${params.toString()}`);
+        const res = await fetch(`/schedule/table?${params.toString()}`);
         const data = await res.json();
 
         return {
@@ -36,12 +36,13 @@ const itemsPerPageOptions = [
 ];
 const headers = ref([
     { title: "No", key: "no", align: "start", sortable: false },
-    { title: "Name", key: "name", align: "start" },
+    { title: "From", key: "start_date", align: "start" },
+    { title: "To", key: "end_date", align: "start" },
     { title: "Status", key: "status", align: "center" },
     {
-        title: "Unavailable Shift",
-        key: "unavailable_shift_display",
-        align: "start",
+        title: "Max Shift per Employee",
+        key: "max_shift_per_employee",
+        align: "center",
     },
     { title: "Action", key: "action", align: "center", sortable: false },
 ]);
@@ -64,7 +65,7 @@ function loadItems(options) {
 </script>
 <template>
     <AuthenticatedLayout>
-        <Head title="Employee" />
+        <Head title="Schedule" />
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -86,7 +87,7 @@ function loadItems(options) {
                             <div
                                 class="d-flex justify-between align-center mt-4 mb-2 mx-4"
                             >
-                                <h6 class="text-h6">Employee List</h6>
+                                <h6 class="text-h6">Schedule List</h6>
 
                                 <div class="d-flex align-center gap-2">
                                     <v-text-field
@@ -101,11 +102,11 @@ function loadItems(options) {
                                         variant="outlined"
                                     ></v-text-field>
 
-                                    <Link :href="route('employee.create')">
+                                    <Link :href="route('schedule.create')">
                                         <v-btn
                                             color="teal"
                                             prepend-icon="mdi-plus"
-                                            >Add</v-btn
+                                            >Generate</v-btn
                                         >
                                     </Link>
                                 </div>
@@ -136,31 +137,15 @@ function loadItems(options) {
                             </div>
                         </template>
 
-                        <!-- Kolom Unavailable Shift -->
-                        <template #item.unavailable_shift_display="{ item }">
-                            <div class="flex flex-wrap justify-start">
-                                <ul class="list-disc pl-4">
-                                    <li
-                                        v-for="(
-                                            shift, index
-                                        ) in item.unavailable_shift_display"
-                                        :key="index"
-                                    >
-                                        {{ shift }}
-                                    </li>
-                                </ul>
-                            </div>
-                        </template>
-
                         <!-- Kolom action -->
                         <template #item.action="{ item }">
                             <div class="flex justify-center gap-2">
-                                <Link :href="route('employee.edit', item.id)">
+                                <Link :href="route('schedule.show', item.id)">
                                     <v-btn
                                         color="warning"
                                         size="small"
                                         prepend-icon="mdi-pencil"
-                                        >Edit</v-btn
+                                        >Show</v-btn
                                     >
                                 </Link>
                             </div>

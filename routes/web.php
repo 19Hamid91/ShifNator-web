@@ -28,6 +28,12 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('schedule')->group(function () {
         Route::get('/', [ScheduleController::class, 'index'])->name('schedule.index');
+        Route::get('/table', [ScheduleController::class, 'table'])->name('schedule.table');
+        Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
+        Route::get('/result', [ScheduleController::class, 'result'])->name('schedule.result');
+        Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
+        Route::get('/show/{schedule}', [ScheduleController::class, 'show'])->name('schedule.show');
+        Route::patch('/update/{schedule}', [ScheduleController::class, 'update'])->name('schedule.update');
     });
 });
 
