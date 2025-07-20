@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
@@ -8,9 +9,9 @@ use Inertia\Inertia;
 
 Route::redirect('/', 'login');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,7 +33,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [ScheduleController::class, 'create'])->name('schedule.create');
         Route::get('/result/{id}', [ScheduleController::class, 'result'])->name('schedule.result');
         Route::post('/store', [ScheduleController::class, 'store'])->name('schedule.store');
-        Route::patch('/update/{schedule}', [ScheduleController::class, 'update'])->name('schedule.update');
         Route::patch('/change/{schedule}', [ScheduleController::class, 'change'])->name('schedule.change');
     });
 });

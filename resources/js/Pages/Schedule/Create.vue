@@ -39,14 +39,6 @@ const months = ref([
     { title: "Desember", value: 12 },
 ]);
 
-const form = useForm({
-    year: "",
-    month: "",
-    status: "",
-    max_shift_per_employee: "",
-    selected_employees: [],
-});
-
 const headers = ref([
     { title: "No", key: "no", align: "start", sortable: false },
     { title: "Name", key: "name", align: "start" },
@@ -78,6 +70,16 @@ const dataItems = ref(
         };
     })
 );
+
+const idList = dataItems.value.map((item) => item.id);
+
+const form = useForm({
+    year: "",
+    month: "",
+    status: "",
+    max_shift_per_employee: "",
+    selected_employees: idList,
+});
 
 const submit = () => {
     form.post(route("schedule.store"), {
@@ -150,7 +152,7 @@ watch(
                             <v-row>
                                 <v-col cols="12" sm="6">
                                     <v-text-field
-                                        label="Tahun"
+                                        label="Year"
                                         variant="outlined"
                                         v-model="form.year"
                                         type="number"
