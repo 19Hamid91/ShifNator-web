@@ -1,14 +1,26 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { Head, Link, router, usePage } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
+
+const page = usePage();
+
+const snackbar = ref({
+    show: false,
+    color: "",
+    message: "",
+    timeout: 4000,
+});
+
+const loadingStatus = ref({});
+const changingId = ref(null);
 
 const fecthData = async ({ page, itemsPerPage, sortBy, search }) => {
     const params = new URLSearchParams({
         page,
         per_page: itemsPerPage,
-        sort_by: sortBy?.[0]?.key || "name",
-        order: sortBy?.[0]?.order || "asc",
+        sort_by: sortBy?.[0]?.key || "year",
+        order: sortBy?.[0]?.order || "desc",
         search: search || "",
     });
 
@@ -36,8 +48,7 @@ const itemsPerPageOptions = [
 ];
 const headers = ref([
     { title: "No", key: "no", align: "start", sortable: false },
-    { title: "From", key: "start_date", align: "start" },
-    { title: "To", key: "end_date", align: "start" },
+    { title: "Periode", key: "periode", align: "start" },
     { title: "Status", key: "status", align: "center" },
     {
         title: "Max Shift per Employee",
@@ -62,10 +73,55 @@ function loadItems(options) {
         loading.value = false;
     });
 }
+
+function toggleStatus(scheduleId) {
+    changingId.value = scheduleId;
+    loadingStatus.value[scheduleId] = true;
+    router.patch(route("schedule.change", scheduleId));
+}
+
+watch(
+    () => page.props.flash,
+    (flash) => {
+        if (flash.success) {
+            snackbar.value = {
+                show: true,
+                color: "green",
+                message: flash.success,
+                timeout: 3000,
+            };
+        } else if (flash.error) {
+            snackbar.value = {
+                show: true,
+                color: "red",
+                message: flash.error,
+                timeout: 5000,
+            };
+        }
+        if (changingId.value !== null) {
+            loadingStatus.value[changingId.value] = false;
+            changingId.value = null;
+        }
+        loadItems(lastOptions.value);
+    },
+    { immediate: true, deep: true }
+);
 </script>
 <template>
     <AuthenticatedLayout>
         <Head title="Schedule" />
+
+        <!-- snackbar -->
+        <v-snackbar
+            v-model="snackbar.show"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
+            location="bottom right"
+            timer="true"
+            variant="elevated"
+        >
+            {{ snackbar.message }}
+        </v-snackbar>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -140,14 +196,33 @@ function loadItems(options) {
                         <!-- Kolom action -->
                         <template #item.action="{ item }">
                             <div class="flex justify-center gap-2">
-                                <Link :href="route('schedule.show', item.id)">
+                                <Link :href="route('schedule.result', item.id)">
                                     <v-btn
                                         color="warning"
                                         size="small"
-                                        prepend-icon="mdi-pencil"
+                                        prepend-icon="mdi-calendar"
                                         >Show</v-btn
                                     >
                                 </Link>
+                                <v-btn
+                                    v-if="item.status === 'active'"
+                                    color="pink"
+                                    size="small"
+                                    :loading="loadingStatus[item.id] === true"
+                                    @click="toggleStatus(item.id)"
+                                >
+                                    Deactivate
+                                </v-btn>
+
+                                <v-btn
+                                    v-else
+                                    color="green"
+                                    size="small"
+                                    :loading="loadingStatus[item.id] === true"
+                                    @click="toggleStatus(item.id)"
+                                >
+                                    Activate
+                                </v-btn>
                             </div>
                         </template>
                     </v-data-table-server>

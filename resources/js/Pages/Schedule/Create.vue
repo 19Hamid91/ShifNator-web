@@ -24,10 +24,26 @@ const statuses = ref([
     { title: "Inactive", value: "inactive" },
 ]);
 
+const months = ref([
+    { title: "January", value: 1 },
+    { title: "February", value: 2 },
+    { title: "March", value: 3 },
+    { title: "April", value: 4 },
+    { title: "May", value: 5 },
+    { title: "June", value: 6 },
+    { title: "July", value: 7 },
+    { title: "August", value: 8 },
+    { title: "September", value: 9 },
+    { title: "October", value: 10 },
+    { title: "November", value: 11 },
+    { title: "Desember", value: 12 },
+]);
+
 const form = useForm({
-    start_date: "",
-    end_date: "",
+    year: "",
+    month: "",
     status: "",
+    max_shift_per_employee: "",
     selected_employees: [],
 });
 
@@ -65,7 +81,7 @@ const dataItems = ref(
 
 const submit = () => {
     form.post(route("schedule.store"), {
-        onSuccess: () => form.reset(),
+        // onSuccess: () => form.reset(),
     });
 };
 
@@ -131,33 +147,31 @@ watch(
                     </v-card-title>
                     <form @submit.prevent="submit">
                         <v-card-text>
-                            <v-row dense>
+                            <v-row>
                                 <v-col cols="12" sm="6">
                                     <v-text-field
-                                        label="From"
+                                        label="Tahun"
                                         variant="outlined"
-                                        v-model="form.start_date"
-                                        type="date"
+                                        v-model="form.year"
+                                        type="number"
                                         required
                                         autofocus
-                                        autocomplete="start_date"
+                                        autocomplete="year"
                                         density="compact"
-                                        :error-messages="form.errors.start_date"
+                                        :error-messages="form.errors.year"
                                         hide-details="auto"
                                         color="teal-lighten-2"
                                     />
                                 </v-col>
                                 <v-col cols="12" sm="6">
-                                    <v-text-field
-                                        label="To"
+                                    <v-select
+                                        label="Month"
                                         variant="outlined"
-                                        v-model="form.end_date"
-                                        type="date"
+                                        :items="months"
+                                        v-model="form.month"
                                         required
-                                        autofocus
-                                        autocomplete="end_date"
                                         density="compact"
-                                        :error-messages="form.errors.end_date"
+                                        :error-messages="form.errors.month"
                                         hide-details="auto"
                                         color="teal-lighten-2"
                                     />
@@ -165,7 +179,7 @@ watch(
                             </v-row>
 
                             <v-row>
-                                <v-col cols="12">
+                                <v-col cols="12" sm="6">
                                     <v-select
                                         label="Status"
                                         variant="outlined"
@@ -174,6 +188,23 @@ watch(
                                         required
                                         density="compact"
                                         :error-messages="form.errors.status"
+                                        hide-details="auto"
+                                        color="teal-lighten-2"
+                                    />
+                                </v-col>
+                                <v-col cols="12" sm="6">
+                                    <v-text-field
+                                        label="Max Shift"
+                                        variant="outlined"
+                                        v-model="form.max_shift_per_employee"
+                                        type="number"
+                                        required
+                                        autofocus
+                                        autocomplete="max_shift_per_employee"
+                                        density="compact"
+                                        :error-messages="
+                                            form.errors.max_shift_per_employee
+                                        "
                                         hide-details="auto"
                                         color="teal-lighten-2"
                                     />

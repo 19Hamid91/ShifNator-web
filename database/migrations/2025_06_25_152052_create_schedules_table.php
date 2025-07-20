@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->year('year');
+            $table->tinyInteger('month');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->unsignedTinyInteger('max_shift_per_employee')->default(5); // Max shifts per employee for this schedule
             $table->json('selected_employees'); // array of employee IDs used in this schedule

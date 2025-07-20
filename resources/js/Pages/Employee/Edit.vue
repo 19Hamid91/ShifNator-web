@@ -60,8 +60,6 @@ const form = useForm({
     },
 });
 
-console.log(props);
-
 const submit = () => {
     form.patch(route("employee.update", props.id));
 };

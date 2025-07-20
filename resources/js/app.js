@@ -11,11 +11,15 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import { VCalendar } from "vuetify/labs/VCalendar";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 const vuetify = createVuetify({
-    components,
+    components: {
+        ...components,
+        VCalendar,
+    },
     directives,
 });
 
